@@ -1,0 +1,17 @@
+# Render Blueprint – Telegram bot (Web Service, health check orqali uxlamaydi)
+services:
+  - type: web
+    name: telegram-media-bot
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
+      - key: ADMIN_ID
+        sync: false
+      - key: MAX_FILE_SIZE_MB
+        value: "50"
+    # Render avtomatik PORT ni beradi; bot health server shu portda javob beradi
+    healthCheckPath: /
+    # Start: Dockerfile CMD (python main.py). PORT ni Render beradi, health server shu portda ishlaydi.

@@ -1,4 +1,4 @@
-"""Instagram, TikTok, Pinterest, Facebook — link yuborilgach tanlash menyusi (Video / 🎧Audio / Qo'shiqni topish)."""
+"""Instagram, TikTok, Pinterest, Facebook — link yuborilgach tanlash menyusi (Video / MP3 / Qo'shiqni topish)."""
 import logging
 from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery, FSInputFile
@@ -28,7 +28,7 @@ def _build_media_keyboard(lang: str):
     builder = InlineKeyboardBuilder()
     builder.row(
         InlineKeyboardButton(text="📹 Video", callback_data="md_v"),
-        InlineKeyboardButton(text="🎧Audio", callback_data="md_🎧Audio"),
+        InlineKeyboardButton(text="🎧 MP3", callback_data="md_mp3"),
         InlineKeyboardButton(text=get_text(lang, "find_full_song"), callback_data="md_s"),
     )
     return builder.as_markup()
@@ -140,8 +140,8 @@ async def on_media_video(callback: CallbackQuery) -> None:
             pass
 
 
-@router.callback_query(F.data == "md_🎧Audio")
-async def on_media_🎧Audio(callback: CallbackQuery) -> None:
+@router.callback_query(F.data == "md_mp3")
+async def on_media_mp3(callback: CallbackQuery) -> None:
     url = _get_pending(callback)
     if not url:
         await callback.answer(get_text("uz", "error_friendly"), show_alert=True)
@@ -153,13 +153,13 @@ async def on_media_🎧Audio(callback: CallbackQuery) -> None:
         lang = await db.get_user_language(user_id)
         await callback.message.edit_text("⏳", parse_mode="HTML")
         async with queue_manager(user_id):
-            prefix = f"md_🎧Audio_{user_id}_{callback.message.message_id}"
-            path = await media_svc.download_as_🎧Audio(url, prefix)
+            prefix = f"md_mp3_{user_id}_{callback.message.message_id}"
+            path = await media_svc.download_as_mp3(url, prefix)
             if path and path.exists():
                 try:
                     fname = sanitize_audio_filename("Track", "")
                     audio_file = FSInputFile(path)
-                    caption = get_text(lang, "🎧Audio_caption", title="Track", artist="", album="", duration="")
+                    caption = get_text(lang, "mp3_caption", title="Track", artist="", album="", duration="")
                     await callback.message.answer_audio(audio_file, caption=caption, parse_mode="HTML")
                     await callback.message.edit_text(
                         get_text(lang, "yt_done_keep"),
@@ -177,7 +177,7 @@ async def on_media_🎧Audio(callback: CallbackQuery) -> None:
                 )
                 _put_pending(user_id, callback.message.message_id, url)
     except Exception as e:
-        logger.error("md_🎧Audio: %s", e)
+        logger.error("md_mp3: %s", e)
         try:
             lang = await get_db().get_user_language(user_id)
             await callback.message.edit_text(get_text(lang, "error_friendly"), parse_mode="HTML")
@@ -200,8 +200,8 @@ async def on_media_shazam(callback: CallbackQuery) -> None:
         await callback.message.edit_text("⏳", parse_mode="HTML")
         async with queue_manager(user_id):
             prefix = f"md_s_{user_id}_{callback.message.message_id}"
-            🎧Audio_path = await media_svc.download_as_🎧Audio(url, prefix)
-            if not 🎧Audio_path or not 🎧Audio_path.exists():
+            mp3_path = await media_svc.download_as_mp3(url, prefix)
+            if not mp3_path or not mp3_path.exists():
                 await callback.message.edit_text(
                     get_text(lang, "error_friendly"),
                     reply_markup=_build_media_keyboard(lang),
@@ -210,9 +210,9 @@ async def on_media_shazam(callback: CallbackQuery) -> None:
                 _put_pending(user_id, callback.message.message_id, url)
                 return
             try:
-                track = await shazam_svc.recognize_file_thorough(🎧Audio_path)
+                track = await shazam_svc.recognize_file_thorough(mp3_path)
             finally:
-                cleanup_temp_file(🎧Audio_path)
+                cleanup_temp_file(mp3_path)
             if not track:
                 await callback.message.edit_text(
                     get_text(lang, "not_found"),

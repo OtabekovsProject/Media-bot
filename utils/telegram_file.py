@@ -21,12 +21,12 @@ async def download_telegram_file(bot, file_id: str, user_id: int, ext: str = "og
 
 
 def extract_audio_from_video(video_path: Path, output_path: Path) -> bool:
-    """Extract audio to output_path (e.g. .🎧Audio or .ogg) using ffmpeg."""
+    """Extract audio to output_path (e.g. .mp3 or .ogg) using ffmpeg."""
     try:
         r = subprocess.run(
             [
                 "ffmpeg", "-y", "-i", str(video_path),
-                "-vn", "-acodec", "lib🎧Audiolame", "-q:a", "2",
+                "-vn", "-acodec", "libmp3lame", "-q:a", "2",
                 str(output_path),
             ],
             capture_output=True,
@@ -49,7 +49,7 @@ async def get_audio_path_for_shazam(bot, file_id: str, user_id: int, is_video: b
         return None
     if is_video:
         loop = asyncio.get_event_loop()
-        audio_path = path.with_suffix(".🎧Audio")
+        audio_path = path.with_suffix(".mp3")
         ok = await loop.run_in_executor(
             None,
             lambda: extract_audio_from_video(path, audio_path),

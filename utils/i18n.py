@@ -12,7 +12,7 @@ TEXTS = {
         "shazam_found": "🎵 <b>Qo'shiq topildi</b>\n\n<b>Nomi:</b> {title}\n<b>Ijrochi:</b> {artist}\n<b>Albom:</b> {album}\n<b>Janr:</b> {genre}\n<b>Yil:</b> {year}",
         "shazam_not_found": "❌ Qo'shiq aniqlanmadi. Boshqa audio yuboring.",
         "shazam_error": "⚠️ Audio qayta ishlanmoqda. Keyinroq urinib ko'ring.",
-        "btn_youtube": "🎵Qo`shiqni",
+        "btn_youtube": "🎵 YouTube'dan yuklab olish",
         "btn_10_variants": "📀 10 ta variant",
         "btn_details": "🔍 Batafsil",
         "send_yt_link": "🔗 YouTube linkini yuboring yoki Shazam natijasidan tanlang.",

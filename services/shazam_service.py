@@ -23,8 +23,8 @@ def _extract_segment(input_path: Path, start_ratio: float, end_ratio: float, suf
         if end_ms - start_ms < MIN_LENGTH_MS:
             return None
         segment = audio[start_ms:min(start_ms + want_ms, end_ms)]
-        out = TEMP_DIR / f"shazam_seg_{input_path.stem}_{suffix}.🎧Audio"
-        segment.export(str(out), format="🎧Audio", bitrate="192k")
+        out = TEMP_DIR / f"shazam_seg_{input_path.stem}_{suffix}.mp3"
+        segment.export(str(out), format="mp3", bitrate="192k")
         return out if out.exists() else None
     except Exception:
         return None
@@ -53,8 +53,8 @@ def _extract_first_sec(input_path: Path, max_sec: float = 45.0) -> Path | None:
             return None
         want_ms = min(int(max_sec * 1000), total_ms)
         segment = audio[:want_ms]
-        out = TEMP_DIR / f"shazam_seg_{input_path.stem}_first.🎧Audio"
-        segment.export(str(out), format="🎧Audio", bitrate="192k")
+        out = TEMP_DIR / f"shazam_seg_{input_path.stem}_first.mp3"
+        segment.export(str(out), format="mp3", bitrate="192k")
         return out if out.exists() else None
     except Exception:
         return None

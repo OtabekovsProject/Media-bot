@@ -129,18 +129,18 @@ async def shazam_download_yt(callback: CallbackQuery) -> None:
                 return
             vid = results[0].get("id") or results[0].get("video_id")
             url = f"https://www.youtube.com/watch?v={vid}"
-            🎧Audio_path, thumb_path = await youtube_svc.download_🎧Audio_with_cover(
+            mp3_path, thumb_path = await youtube_svc.download_mp3_with_cover(
                 url, f"shazam_yt_{user_id}_{callback.message.message_id}", title, artist, ""
             )
-            if 🎧Audio_path and 🎧Audio_path.exists():
+            if mp3_path and mp3_path.exists():
                 try:
                     fname = sanitize_audio_filename(title, artist)
-                    audio_file = BufferedInputFile(🎧Audio_path.read_bytes(), filename=fname)
-                    caption = get_text(lang, "🎧Audio_caption", title=title, artist=artist, album="", duration="")
+                    audio_file = BufferedInputFile(mp3_path.read_bytes(), filename=fname)
+                    caption = get_text(lang, "mp3_caption", title=title, artist=artist, album="", duration="")
                     await callback.message.delete()
                     await callback.message.answer_audio(audio_file, caption=caption, parse_mode="HTML")
                 finally:
-                    cleanup_temp_file(🎧Audio_path)
+                    cleanup_temp_file(mp3_path)
                     cleanup_temp_file(thumb_path)
             else:
                 await callback.message.edit_text(get_text(lang, "error_friendly"), parse_mode="HTML")

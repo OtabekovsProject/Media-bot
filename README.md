@@ -1,6 +1,6 @@
 # 🎵 Professional Telegram Media Bot
 
-Shazam, YouTube 🎧Audio, **Instagram / TikTok / Facebook / Pinterest** dan to‘liq video va 🎧Audio yuklash; videodagi musiqani aniqlash (Qo‘shiqni to‘liq topish). 10 ta variant inline.
+Shazam, YouTube MP3, **Instagram / TikTok / Facebook / Pinterest** dan to‘liq video va MP3 yuklash; videodagi musiqani aniqlash (Qo‘shiqni to‘liq topish). 10 ta variant inline.
 
 ## Texnologiyalar
 
@@ -29,7 +29,7 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-**FFmpeg:** `requirements.txt` dagi **imageio-ffmpeg** orqali pip bilan avtomatik o‘rnatiladi (🎧Audio/Video uchun). Agar tizimda FFmpeg allaqachon bo‘lsa yoki `install_ffmpeg.bat` ni ishlatgan bo‘lsangiz, bot uni avtomatik topadi.
+**FFmpeg:** `requirements.txt` dagi **imageio-ffmpeg** orqali pip bilan avtomatik o‘rnatiladi (MP3/Video uchun). Agar tizimda FFmpeg allaqachon bo‘lsa yoki `install_ffmpeg.bat` ni ishlatgan bo‘lsangiz, bot uni avtomatik topadi.
 
 `.env` yarating (`.env.example` dan nusxa oling):
 
@@ -49,9 +49,9 @@ python main.py
 
 - **/start** — til tanlash (O‘zbek, Русский, English).
 - **Shazam** — audio, video yoki ovoz yuboring → qo‘shiq aniqlanadi → YouTube / 10 variant / Batafsil.
-- **YouTube link** → 🎧Audio, Video yoki **Qo‘shiqni to‘liq topish** (videodan musiqa).
-- **Instagram / TikTok / Facebook / Pinterest link** → **Video**, **🎧Audio** yoki **Qo‘shiqni to‘liq topish** (videodagi musiqani Shazam orqali topadi). To‘liq va aniq yuklash, platformaga xos sozlamalar.
-- **10 ta variant** — Shazam natijasidan “10 ta variant” → tanlangan trek 🎧Audio.
+- **YouTube link** → MP3, Video yoki **Qo‘shiqni to‘liq topish** (videodan musiqa).
+- **Instagram / TikTok / Facebook / Pinterest link** → **Video**, **MP3** yoki **Qo‘shiqni to‘liq topish** (videodagi musiqani Shazam orqali topadi). To‘liq va aniq yuklash, platformaga xos sozlamalar.
+- **10 ta variant** — Shazam natijasidan “10 ta variant” → tanlangan trek MP3.
 
 ## Ichki himoya (foydalanuvchi ko‘rmaydi)
 

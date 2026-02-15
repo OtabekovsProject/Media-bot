@@ -38,7 +38,7 @@ def _ydl_opts(prefix: str, format_best: bool = False, audio_only: bool = False, 
     if audio_only:
         opts["format"] = "bestaudio/best"
         opts["postprocessors"] = [
-            {"key": "FFmpegExtractAudio", "preferredcodec": "🎧Audio", "preferredquality": "192"}
+            {"key": "FFmpegExtractAudio", "preferredcodec": "mp3", "preferredquality": "192"}
         ]
         opts["postprocessor_args"] = {"ffmpeg": ["-y"]}
     if FFMPEG_LOCATION:
@@ -113,8 +113,8 @@ class MediaDownloaderService:
         """Istalgan platforma (Instagram/TikTok/Facebook/Pinterest) uchun video."""
         return await self._download_generic(url, prefix)
 
-    async def download_as_🎧Audio(self, url: str, prefix: str, retries: int = 2) -> Path | None:
-        """Havoladan 🎧Audio – videodan musiqani ajratib (Instagram/TikTok/Facebook va b.)."""
+    async def download_as_mp3(self, url: str, prefix: str, retries: int = 2) -> Path | None:
+        """Havoladan MP3 – videodan musiqani ajratib (Instagram/TikTok/Facebook va b.)."""
         platform = self.detect_platform(url)
         loop = asyncio.get_event_loop()
         opts = _ydl_opts(prefix, format_best=False, audio_only=True, platform=platform)
@@ -124,11 +124,11 @@ class MediaDownloaderService:
                 info = await loop.run_in_executor(None, lambda u=url, o=opts: self._run_ydl(o, u))
                 if not info:
                     continue
-                🎧Audio_path = TEMP_DIR / f"{prefix}.🎧Audio"
-                if 🎧Audio_path.exists() and 🎧Audio_path.stat().st_size <= MAX_FILE_SIZE_BYTES:
-                    return 🎧Audio_path
+                mp3_path = TEMP_DIR / f"{prefix}.mp3"
+                if mp3_path.exists() and mp3_path.stat().st_size <= MAX_FILE_SIZE_BYTES:
+                    return mp3_path
                 for f in TEMP_DIR.iterdir():
-                    if f.is_file() and f.name.startswith(prefix) and f.suffix.lower() == ".🎧Audio":
+                    if f.is_file() and f.name.startswith(prefix) and f.suffix.lower() == ".mp3":
                         if f.stat().st_size <= MAX_FILE_SIZE_BYTES:
                             return f
             except Exception:

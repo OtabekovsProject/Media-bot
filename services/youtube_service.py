@@ -1,9 +1,9 @@
-"""YouTube: yt-dlp for 🎧Audio with cover, search, and download."""
+"""YouTube: yt-dlp for MP3 with cover, search, and download."""
 import asyncio
 import os
 from pathlib import Path
 import yt_dlp
-from mutagen.🎧Audio import 🎧Audio
+from mutagen.mp3 import MP3
 from mutagen.id3 import ID3, APIC
 
 from config import TEMP_DIR, MAX_FILE_SIZE_BYTES, FFMPEG_LOCATION
@@ -58,7 +58,7 @@ class YouTubeService:
                 break
         return result
 
-    async def download_🎧Audio_with_cover(
+    async def download_mp3_with_cover(
         self,
         url: str,
         output_name: str,
@@ -67,11 +67,11 @@ class YouTubeService:
         album: str = "",
     ) -> tuple[Path | None, Path | None]:
         """
-        Download audio as 🎧Audio and cover image. Embed cover into 🎧Audio.
-        Returns (path_to_🎧Audio, path_to_cover) or (None, None) on error.
+        Download audio as MP3 and cover image. Embed cover into MP3.
+        Returns (path_to_mp3, path_to_cover) or (None, None) on error.
         """
         out_dir = Path(TEMP_DIR)
-        🎧Audio_path = out_dir / f"{output_name}.🎧Audio"
+        mp3_path = out_dir / f"{output_name}.mp3"
         thumb_path = out_dir / f"{output_name}_thumb.jpg"
 
         opts = {
@@ -82,7 +82,7 @@ class YouTubeService:
             "postprocessors": [
                 {
                     "key": "FFmpegExtractAudio",
-                    "preferredcodec": "🎧Audio",
+                    "preferredcodec": "mp3",
                     "preferredquality": "192",
                 }
             ],
@@ -97,18 +97,18 @@ class YouTubeService:
             if not info:
                 return (None, None)
 
-            # yt-dlp + FFmpegExtractAudio produces output_name.🎧Audio
-            🎧Audio_path = out_dir / f"{output_name}.🎧Audio"
-            if not 🎧Audio_path.exists():
+            # yt-dlp + FFmpegExtractAudio produces output_name.mp3
+            mp3_path = out_dir / f"{output_name}.mp3"
+            if not mp3_path.exists():
                 for f in out_dir.glob(f"{output_name}.*"):
-                    if f.suffix.lower() == ".🎧Audio":
-                        🎧Audio_path = f
+                    if f.suffix.lower() == ".mp3":
+                        mp3_path = f
                         break
 
             # Thumbnail
             for ext in ["webp", "jpg", "png"]:
                 p = out_dir / f"{output_name}.{ext}"
-                if p.exists() and p != 🎧Audio_path:
+                if p.exists() and p != mp3_path:
                     thumb_path = out_dir / f"{output_name}_thumb.jpg"
                     try:
                         from PIL import Image
@@ -119,15 +119,15 @@ class YouTubeService:
                         thumb_path = p
                     break
 
-            if 🎧Audio_path.exists():
-                size = 🎧Audio_path.stat().st_size
+            if mp3_path.exists():
+                size = mp3_path.stat().st_size
                 if size > MAX_FILE_SIZE_BYTES:
-                    🎧Audio_path.unlink(missing_ok=True)
+                    mp3_path.unlink(missing_ok=True)
                     return (None, None)
-                # Embed cover into 🎧Audio
+                # Embed cover into MP3
                 if thumb_path.exists():
                     try:
-                        audio = 🎧Audio(str(🎧Audio_path), ID3=ID3)
+                        audio = MP3(str(mp3_path), ID3=ID3)
                         try:
                             audio.add_tags()
                         except Exception:
@@ -145,7 +145,7 @@ class YouTubeService:
                         audio.save()
                     except Exception:
                         pass
-                return (🎧Audio_path, thumb_path if thumb_path.exists() else None)
+                return (mp3_path, thumb_path if thumb_path.exists() else None)
             return (None, None)
         except Exception:
             return (None, None)

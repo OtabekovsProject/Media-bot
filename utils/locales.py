@@ -6,11 +6,11 @@ TEXTS = {
         "lang_set": "✅ Til o'zbekcha qilib o'rnatildi.",
         "send_audio": "🎵 Qo'shiqni aniqlash uchun audio, video yoki ovozli xabar yuboring.",
         "send_link": "🔗 YouTube, Instagram, TikTok yoki Pinterest linkini yuboring.",
-        "send_yt_for_🎧Audio": "🎧Audio olish uchun YouTube linkini yuboring.",
+        "send_yt_for_mp3": "🎧 MP3 olish uchun YouTube linkini yuboring.",
         "recognizing": "🔍 Tanishyapman...",
         "not_found": "❌ Qo'shiq aniqlanmadi. Boshqa audio yuboring.",
         "loading": "⏳",
-        "error": "❌Biroz muammo bo`ldi .",
+        "error": "❌ Xatolik yuz berdi. Keyinroq urinib ko'ring.",
         "error_friendly": "😔 Biroz muammo bo‘ldi. Iltimos, keyinroq qayta urinib ko‘ring.",
         "file_too_big": "❌ Fayl hajmi chegaradan oshdi.",
         "shazam_result": (
@@ -21,10 +21,10 @@ TEXTS = {
             "📅 {year}\n\n"
             "Quyidagilardan birini tanlang:"
         ),
-        "🎧Audio_caption": "🎵 {title}\n👤 {artist}\n💿 {album}\n⏱ {duration}",
+        "mp3_caption": "🎵 {title}\n👤 {artist}\n💿 {album}\n⏱ {duration}",
         "variants_title": "📀 10 ta variant – birini tanlang:",
         "details": "🔍 Batafsil",
-        "download_yt": "🎵Yuklash",
+        "download_yt": "🎵 YouTube'dan yuklab olish",
         "ten_variants": "📀 10 ta variant",
         "platform_detected": "📥 {platform} – yuklanmoqda...",
         "choose": "Tanlang:",
@@ -32,7 +32,7 @@ TEXTS = {
         "searching": "⏳",
         "search_results": "📀 <b>«{query}»</b> bo‘yicha 10 ta variant. Birini tanlang:",
         "search_nothing": "❌ Hech narsa topilmadi. Boshqa so‘zlar bilan qidiring.",
-        "find_full_song": "🎵Musiqasi",
+        "find_full_song": "🎵 Qo'shiqni to'liq topish",
         "yt_done_keep": "✅ Yuklab olindi. Boshqa formatni ham tanlashingiz mumkin 👇",
         "media_choose": "📥 <b>{platform}</b>\n\n👇 Tanlang:",
         "admin_denied": "⛔ Bu buyruq faqat adminlar uchun.",
@@ -62,14 +62,14 @@ TEXTS = {
         "subscribe_ok": "✅ Barcha kanallarga obunasiz. Endi botdan foydalanishingiz mumkin.",
         "subscribe_fail": "❌ Hali ham quyidagi kanal(lar)ga obuna bo'lishingiz kerak:\n{channels}",
         "no_channels": "Hozircha kanal qo'shilmagan.",
-        "welcome_after_lang": "👋 <b>Xush kelibsiz!</b>\n\nMen sizga quyidagilarda yordam beraman:\n\n🎵 <b>Shazam</b> – audio, video yoki ovoz yuboring, qo‘shiqni aniqlayman\n🎧 <b>YouTube 🎧Audio</b> – link yuboring, audio yuklab beraman\n📥 <b>Instagram, TikTok, Pinterest</b> – link yuboring, media yuklab beraman\n\nXohlagan narsangizni yuboring.",
+        "welcome_after_lang": "👋 <b>Xush kelibsiz!</b>\n\nMen sizga quyidagilarda yordam beraman:\n\n🎵 <b>Shazam</b> – audio, video yoki ovoz yuboring, qo‘shiqni aniqlayman\n🎧 <b>YouTube MP3</b> – link yuboring, audio yuklab beraman\n📥 <b>Instagram, TikTok, Pinterest</b> – link yuboring, media yuklab beraman\n\nXohlagan narsangizni yuboring.",
     },
     "ru": {
         "welcome": "👋 Здравствуйте!\n\nВыберите язык:",
         "lang_set": "✅ Язык установлен: русский.",
         "send_audio": "🎵 Отправьте аудио, видео или голосовое сообщение для распознавания.",
         "send_link": "🔗 Отправьте ссылку YouTube, Instagram, TikTok или Pinterest.",
-        "send_yt_for_🎧Audio": "🎧 Отправьте ссылку YouTube для скачивания в 🎧Audio.",
+        "send_yt_for_mp3": "🎧 Отправьте ссылку YouTube для скачивания в MP3.",
         "recognizing": "🔍 Распознаю...",
         "not_found": "❌ Трек не найден. Отправьте другое аудио.",
         "loading": "⏳",
@@ -84,7 +84,7 @@ TEXTS = {
             "📅 {year}\n\n"
             "Выберите действие:"
         ),
-        "🎧Audio_caption": "🎵 {title}\n👤 {artist}\n💿 {album}\n⏱ {duration}",
+        "mp3_caption": "🎵 {title}\n👤 {artist}\n💿 {album}\n⏱ {duration}",
         "variants_title": "📀 10 вариантов – выберите один:",
         "details": "🔍 Подробнее",
         "download_yt": "🎵 Скачать с YouTube",
@@ -125,14 +125,14 @@ TEXTS = {
         "subscribe_ok": "✅ Вы подписаны. Можно пользоваться ботом.",
         "subscribe_fail": "❌ Нужно подписаться:\n{channels}",
         "no_channels": "Пока каналов нет.",
-        "welcome_after_lang": "👋 <b>Добро пожаловать!</b>\n\nЯ могу помочь:\n\n🎵 <b>Shazam</b> – отправьте аудио, видео или голосовое, узнаю трек\n🎧 <b>YouTube 🎧Audio</b> – отправьте ссылку, скачаю аудио\n📥 <b>Instagram, TikTok, Pinterest</b> – отправьте ссылку, скачаю медиа\n\nОтправьте что угодно из этого.",
+        "welcome_after_lang": "👋 <b>Добро пожаловать!</b>\n\nЯ могу помочь:\n\n🎵 <b>Shazam</b> – отправьте аудио, видео или голосовое, узнаю трек\n🎧 <b>YouTube MP3</b> – отправьте ссылку, скачаю аудио\n📥 <b>Instagram, TikTok, Pinterest</b> – отправьте ссылку, скачаю медиа\n\nОтправьте что угодно из этого.",
     },
     "en": {
         "welcome": "👋 Hello!\n\nChoose language:",
         "lang_set": "✅ Language set to English.",
         "send_audio": "🎵 Send audio, video or voice message to recognize the song.",
         "send_link": "🔗 Send a YouTube, Instagram, TikTok or Pinterest link.",
-        "send_yt_for_🎧Audio": "🎧 Send a YouTube link to get 🎧Audio.",
+        "send_yt_for_mp3": "🎧 Send a YouTube link to get MP3.",
         "recognizing": "🔍 Recognizing...",
         "not_found": "❌ Song not found. Send another audio.",
         "loading": "⏳",
@@ -147,7 +147,7 @@ TEXTS = {
             "📅 {year}\n\n"
             "Choose an option:"
         ),
-        "🎧Audio_caption": "🎵 {title}\n👤 {artist}\n💿 {album}\n⏱ {duration}",
+        "mp3_caption": "🎵 {title}\n👤 {artist}\n💿 {album}\n⏱ {duration}",
         "variants_title": "📀 10 variants – choose one:",
         "details": "🔍 Details",
         "download_yt": "🎵 Download from YouTube",
@@ -188,7 +188,7 @@ TEXTS = {
         "subscribe_ok": "✅ Subscribed. You can use the bot now.",
         "subscribe_fail": "❌ Please subscribe to:\n{channels}",
         "no_channels": "No channels yet.",
-        "welcome_after_lang": "👋 <b>Welcome!</b>\n\nI can help you with:\n\n🎵 <b>Shazam</b> – send audio, video or voice, I'll recognize the song\n🎧 <b>YouTube 🎧Audio</b> – send a link, I'll download audio\n📥 <b>Instagram, TikTok, Pinterest</b> – send a link, I'll download media\n\nSend anything from the list above.",
+        "welcome_after_lang": "👋 <b>Welcome!</b>\n\nI can help you with:\n\n🎵 <b>Shazam</b> – send audio, video or voice, I'll recognize the song\n🎧 <b>YouTube MP3</b> – send a link, I'll download audio\n📥 <b>Instagram, TikTok, Pinterest</b> – send a link, I'll download media\n\nSend anything from the list above.",
     },
 }
 

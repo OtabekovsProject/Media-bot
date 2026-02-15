@@ -1,4 +1,4 @@
-"""Shazam natijasini saqlash – shazam va youtube_🎧Audio (link → qo'shiqni topish) uchun."""
+"""Shazam natijasini saqlash – shazam va youtube_mp3 (link → qo'shiqni topish) uchun."""
 
 _shazam_cache: dict[str, dict] = {}
 

@@ -70,7 +70,7 @@ async def download_media(
             ok, _ = await loop.run_in_executor(
                 None,
                 lambda: _run_yt_dlp([
-                    "-x", "--audio-format", "🎧Audio",
+                    "-x", "--audio-format", "mp3",
                     "-o", out_tpl,
                     "--no-playlist",
                     url,
@@ -110,7 +110,7 @@ async def download_media(
             mime = "video/mp4" if ext in (".mp4", ".webm", ".mkv") else "image/jpeg"
             if ext == ".png":
                 mime = "image/png"
-            elif ext == ".🎧Audio":
+            elif ext == ".mp3":
                 mime = "audio/mpeg"
             return f, mime
     return None, ""

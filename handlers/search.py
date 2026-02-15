@@ -1,4 +1,4 @@
-"""Plain text = song name → YouTube search → 10 variants with inline buttons (🎧Audio with cover on click)."""
+"""Plain text = song name → YouTube search → 10 variants with inline buttons (MP3 with cover on click)."""
 import logging
 from aiogram import Router, F
 from aiogram.types import Message

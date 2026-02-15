@@ -1,4 +1,4 @@
-"""YouTube link → 3 ta tanlash: 🎧Audio, Video, 🎵Musiqasi. Inline tugmalar qoladi."""
+"""YouTube link → 3 ta tanlash: MP3, Video, Qo'shiqni to'liq topish. Inline tugmalar qoladi."""
 import logging
 from pathlib import Path
 from aiogram import Router, F
@@ -16,7 +16,7 @@ from utils.url_extract import get_youtube_id_from_message
 from utils.shazam_cache import set_track
 from utils.filename import sanitize_audio_filename
 
-router = Router(name="youtube_🎧Audio")
+router = Router(name="youtube_mp3")
 youtube_svc = YouTubeService()
 shazam_svc = ShazamService()
 logger = logging.getLogger(__name__)
@@ -38,10 +38,10 @@ def _track_display_info(track: dict) -> tuple[str, str, str, str, str]:
 
 
 def _build_yt_choice_keyboard(vid: str, lang: str):
-    """3 ta tugma: 🎧Audio, Video, 🎵Musiqasi."""
+    """3 ta tugma: MP3, Video, Qo'shiqni to'liq topish."""
     builder = InlineKeyboardBuilder()
     builder.row(
-        InlineKeyboardButton(text="🎧Audio", callback_data=f"yt_🎧Audio:{vid}"),
+        InlineKeyboardButton(text="🎧 MP3", callback_data=f"yt_mp3:{vid}"),
         InlineKeyboardButton(text="📹 Video", callback_data=f"yt_vid:{vid}"),
         InlineKeyboardButton(text=get_text(lang, "find_full_song"), callback_data=f"yt_shazam:{vid}"),
     )
@@ -54,7 +54,7 @@ def _has_youtube_link(message: Message) -> bool:
 
 @router.message(F.text | F.caption, _has_youtube_link)
 async def on_youtube_link(message: Message) -> None:
-    """User sent YouTube link: send ⏳ then offer 🎧Audio or Video."""
+    """User sent YouTube link: send ⏳ then offer MP3 or Video."""
     vid = get_youtube_id_from_message(message)
     if not vid:
         return
@@ -64,7 +64,7 @@ async def on_youtube_link(message: Message) -> None:
         lang = await db.get_user_language(user_id)
         status = await message.answer("⏳", parse_mode="HTML")
         url = f"https://www.youtube.com/watch?v={vid}"
-        text = get_text(lang, "send_yt_for_🎧Audio") + "\n\n👇 " + get_text(lang, "choose")
+        text = get_text(lang, "send_yt_for_mp3") + "\n\n👇 " + get_text(lang, "choose")
         await status.edit_text(text, reply_markup=_build_yt_choice_keyboard(vid, lang), parse_mode="HTML")
     except Exception as e:
         logger.error("youtube_link: %s", e)
@@ -76,9 +76,9 @@ async def on_youtube_link(message: Message) -> None:
             pass
 
 
-@router.callback_query(F.data.startswith("yt_🎧Audio:"))
-async def do_🎧Audio(callback: CallbackQuery) -> None:
-    vid = callback.data.split("yt_🎧Audio:", 1)[1]
+@router.callback_query(F.data.startswith("yt_mp3:"))
+async def do_mp3(callback: CallbackQuery) -> None:
+    vid = callback.data.split("yt_mp3:", 1)[1]
     user_id = callback.from_user.id
     await callback.answer()
     try:
@@ -87,22 +87,22 @@ async def do_🎧Audio(callback: CallbackQuery) -> None:
         await callback.message.edit_text("⏳", parse_mode="HTML")
         url = f"https://www.youtube.com/watch?v={vid}"
         async with queue_manager(user_id):
-            prefix = f"yt_🎧Audio_{user_id}_{callback.message.message_id}"
-            🎧Audio_path, thumb_path = await youtube_svc.download_🎧Audio_with_cover(
+            prefix = f"yt_mp3_{user_id}_{callback.message.message_id}"
+            mp3_path, thumb_path = await youtube_svc.download_mp3_with_cover(
                 url, prefix, "", "", ""
             )
-            if 🎧Audio_path and 🎧Audio_path.exists():
+            if mp3_path and mp3_path.exists():
                 try:
                     info = await youtube_svc.get_video_info(vid)
                     title = (info.get("title") or "Track")[:50]
                     duration = info.get("duration")
                     duration_str = f"{duration // 60}:{duration % 60:02d}" if duration else "—"
                     caption = get_text(
-                        lang, "🎧Audio_caption",
+                        lang, "mp3_caption",
                         title=title, artist="", album="", duration=duration_str,
                     )
                     fname = sanitize_audio_filename(title, "")
-                    audio_file = BufferedInputFile(🎧Audio_path.read_bytes(), filename=fname)
+                    audio_file = BufferedInputFile(mp3_path.read_bytes(), filename=fname)
                     await callback.message.answer_audio(audio_file, caption=caption, parse_mode="HTML")
                     await callback.message.edit_text(
                         get_text(lang, "yt_done_keep"),
@@ -110,7 +110,7 @@ async def do_🎧Audio(callback: CallbackQuery) -> None:
                         parse_mode="HTML",
                     )
                 finally:
-                    cleanup_temp_file(🎧Audio_path)
+                    cleanup_temp_file(mp3_path)
                     cleanup_temp_file(thumb_path)
             else:
                 await callback.message.edit_text(
@@ -119,7 +119,7 @@ async def do_🎧Audio(callback: CallbackQuery) -> None:
                     parse_mode="HTML",
                 )
     except Exception as e:
-        logger.error("yt_🎧Audio: %s", e)
+        logger.error("yt_mp3: %s", e)
         try:
             db = get_db()
             lang = await db.get_user_language(user_id)
@@ -188,8 +188,8 @@ async def do_yt_shazam(callback: CallbackQuery) -> None:
         url = f"https://www.youtube.com/watch?v={vid}"
         async with queue_manager(user_id):
             prefix = f"yt_shazam_{user_id}_{callback.message.message_id}"
-            🎧Audio_path, thumb_path = await youtube_svc.download_🎧Audio_with_cover(url, prefix, "", "", "")
-            if not 🎧Audio_path or not 🎧Audio_path.exists():
+            mp3_path, thumb_path = await youtube_svc.download_mp3_with_cover(url, prefix, "", "", "")
+            if not mp3_path or not mp3_path.exists():
                 await callback.message.edit_text(
                     get_text(lang, "error_friendly"),
                     reply_markup=_build_yt_choice_keyboard(vid, lang),
@@ -197,9 +197,9 @@ async def do_yt_shazam(callback: CallbackQuery) -> None:
                 )
                 return
             try:
-                track = await shazam_svc.recognize_file_thorough(🎧Audio_path)
+                track = await shazam_svc.recognize_file_thorough(mp3_path)
             finally:
-                cleanup_temp_file(🎧Audio_path)
+                cleanup_temp_file(mp3_path)
                 cleanup_temp_file(thumb_path)
             if not track:
                 await callback.message.edit_text(

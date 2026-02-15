@@ -8,7 +8,7 @@ MAX_FILENAME_LEN = 120
 def sanitize_audio_filename(title: str, artist: str = "") -> str:
     """
     Faqat musiqaning nomi: harflar, probel, defis. Raqamlar va boshqa belgilar olib tashlanadi.
-    Natija: "Artist - Title.🎧Audio" yoki "Title.🎧Audio"
+    Natija: "Artist - Title.mp3" yoki "Title.mp3"
     """
     def clean(s: str) -> str:
         if not s or not s.strip():
@@ -30,4 +30,4 @@ def sanitize_audio_filename(title: str, artist: str = "") -> str:
         name = t or a or "Track"
     # Telegram va fayl tizimi uchun xavfsiz
     name = re.sub(r'[<>:"/\\|?*]', "", name).strip() or "Track"
-    return f"{name[:MAX_FILENAME_LEN]}.🎧Audio"
+    return f"{name[:MAX_FILENAME_LEN]}.mp3"

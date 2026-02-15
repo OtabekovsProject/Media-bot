@@ -13,6 +13,9 @@ MAX_FILE_SIZE_MB = int(os.getenv("MAX_FILE_SIZE_MB", "50"))
 # Port: 0 = o'chirilgan. 8080 yoki boshqa – bot uxlamasligi uchun health server (Railway, Render va b.)
 PORT = int(os.getenv("PORT", "0"))
 MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024
+WEBHOOK_URL = os.getenv("WEBHOOK_URL", "")
+WEBHOOK_PATH = "/webhook"
+
 
 BASE_DIR = Path(__file__).resolve().parent
 TEMP_DIR = BASE_DIR / "temp"

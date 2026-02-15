@@ -17,16 +17,47 @@ def _ydl_extra_opts() -> dict:
     return extra
 
 
+import random
+try:
+    from fake_useragent import UserAgent
+    ua_gen = UserAgent()
+except Exception:
+    ua_gen = None
+
+# Fallback list if fake_useragent fails
+USER_AGENTS = [
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:122.0) Gecko/20100101 Firefox/122.0",
+]
+
+
 class YouTubeService:
     def __init__(self):
         self._opts_base = {
             "quiet": True,
             "no_warnings": True,
             "extract_flat": False,
+            "nocheckcertificate": True,
+            # YouTube sign-in fix (Cookies priority if exists):
+            "cookiefile": "cookies.txt" if os.path.exists("cookies.txt") else None,
             **_ydl_extra_opts(),
         }
 
     def _run_ydl(self, opts: dict, url_or_extract: str) -> dict | list:
+        # Har bir so'rovda yangi User-Agent
+        try:
+            ua = ua_gen.random if ua_gen else random.choice(USER_AGENTS)
+        except Exception:
+            ua = random.choice(USER_AGENTS)
+            
+        opts["http_headers"] = {
+            "User-Agent": str(ua),
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "en-us,en;q=0.5",
+            "Sec-Fetch-Mode": "navigate",
+        }
         with yt_dlp.YoutubeDL(opts) as ydl:
             return ydl.extract_info(url_or_extract, download=True)
 

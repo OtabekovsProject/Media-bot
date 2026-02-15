@@ -11,3 +11,5 @@ pydub>=0.25.0
 
 # FFmpeg (Dockerda tizimda; lokalda ixtiyoriy)
 imageio-ffmpeg>=0.5.0
+fake-useragent>=1.4.0
+
